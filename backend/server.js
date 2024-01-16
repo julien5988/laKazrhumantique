@@ -1,11 +1,20 @@
-const express = require ('express');
-const connectDb = require("./config/db");
+
+const express = require('express');
+const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
-
-
+const connectDb = require('./config/db');
+const giteRoutes = require('./routes/gite');
+const guestRoutes= require('./routes/guest');
 const app = express();
-const port = 5000;
 
+app.use(express.json());
+
+// Connecter à la base de données MongoDB
 connectDb();
 
-app.listen(port,()=> console.log("Le server a demarrer au port " + port ));
+// Utiliser les routes pour les gites
+app.use('/gite', giteRoutes);
+app.use('/guest',guestRoutes);
+
+
+module.exports = app;
